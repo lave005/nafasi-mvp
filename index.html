@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#153e35">
+<title>Nafasi — Make your money last</title>
+<style>
+:root{--ink:#173b32;--muted:#65766f;--bg:#f4f7f3;--card:#fff;--line:#dce6dd;--green:#1d6b50;--mint:#e6f3e9;--amber:#fff3d7;--red:#a53838;--shadow:0 12px 32px rgba(21,62,53,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#20352f;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:1040px;margin:auto;padding:24px 18px 56px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;background:var(--ink);color:white;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:22px}.brandname{font-size:21px;font-weight:800;letter-spacing:-.6px}.tag{font-size:12px;color:var(--muted)}.privacy{border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:12px;color:var(--green);background:#fff;white-space:nowrap}
+.hero{background:linear-gradient(130deg,#173f35,#246c51);color:white;padding:30px;border-radius:24px;box-shadow:var(--shadow);margin-bottom:20px}.eyebrow{text-transform:uppercase;letter-spacing:1.7px;font-size:11px;font-weight:800;color:#bfe5cc}.hero h1{font-size:clamp(28px,5vw,43px);line-height:1.1;letter-spacing:-1.5px;margin:10px 0 12px;max-width:650px}.hero p{max-width:650px;color:#e0efe5;margin:0;font-size:15px}.hero-note{font-size:12px;color:#cfe7d8;margin-top:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);min-width:0}.card h2{font-size:17px;letter-spacing:-.3px;margin:0 0 4px}.sub{font-size:13px;color:var(--muted);margin:0 0 18px}.field{display:flex;flex-direction:column;gap:6px;margin:13px 0}.field label{font-size:13px;font-weight:700}.field input,.field select{width:100%;border:1px solid #cbd8ce;border-radius:11px;padding:12px 12px;font:inherit;font-size:15px;color:var(--ink);background:#fff;min-height:45px}.field input:focus,.field select:focus{outline:3px solid #c7e8d1;border-color:var(--green)}.hint{font-size:11px;color:var(--muted)}
+.expense-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.expense-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(100px,1fr) 36px;gap:8px;margin:10px 0}.expense-row input{min-width:0;width:100%;border:1px solid #cbd8ce;border-radius:10px;padding:10px;font:inherit}.expense-row .amount{min-width:0}.remove{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--red);font-size:18px;cursor:pointer}
+button{font:inherit;cursor:pointer}.btn{border:0;border-radius:12px;background:var(--green);color:white;font-weight:750;padding:12px 16px}.btn:hover{filter:brightness(.95)}.btn.secondary{background:#edf5ef;color:var(--ink);border:1px solid var(--line)}.btn.small{padding:8px 11px;font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.results{margin-top:18px}.result-hero{background:var(--mint);border:1px solid #cde5d2;border-radius:18px;padding:20px;margin-bottom:12px}.result-hero .label{font-size:12px;color:#426650;font-weight:750}.big-number{font-size:clamp(30px,5vw,42px);font-weight:850;letter-spacing:-1.5px;color:var(--ink);margin:2px 0}.result-hero p{font-size:12px;color:#426650;margin:4px 0 0}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:14px;padding:13px;background:#fff}.metric .mlabel{font-size:11px;color:var(--muted)}.metric .mvalue{font-size:18px;font-weight:800;margin-top:5px;overflow-wrap:anywhere}.status{border-radius:12px;padding:12px 14px;font-size:13px;margin-top:12px;background:#f1f5f2;border:1px solid var(--line)}.status.warn{background:var(--amber);border-color:#f0dca9}.status.bad{background:#fff0ef;border-color:#f0c7c4;color:#852d2d}.scenario{margin-top:18px;border-top:1px solid var(--line);padding-top:17px}.range-line{display:flex;align-items:center;gap:12px}.range-line input{flex:1;accent-color:var(--green)}.range-num{font-weight:800;min-width:54px;text-align:right}.smallprint{font-size:11px;color:var(--muted);margin-top:10px}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.plain-list{padding-left:19px;margin:10px 0 0}.plain-list li{margin:8px 0;font-size:13px}.footer{text-align:center;color:var(--muted);font-size:11px;margin-top:25px}.footer a{color:var(--green)}.hide{display:none!important}
+@media(max-width:760px){.grid,.bottom{grid-template-columns:1fr}.wrap{padding:16px 12px 40px}.hero{padding:24px 20px}.card{padding:18px}.privacy{font-size:11px;padding:7px 9px}.metrics{grid-template-columns:1fr 1fr}.metric:last-child{grid-column:1/-1}.expense-row{grid-template-columns:minmax(0,1.4fr) minmax(80px,1fr) 34px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo" aria-hidden="true">N</div><div><div class="brandname">nafasi</div><div class="tag">Make your money last.</div></div></div>
+    <div class="privacy">● Private-by-design demo</div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">Your money, made clearer</div>
+    <h1>Make a plan for the money you have today.</h1>
+    <p>When income is irregular, knowing what must be paid and how long your money needs to last can make the next decision clearer.</p>
+    <div class="hero-note">No bank connection. No M-Pesa login. No account required.</div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>1. Money available</h2>
+      <p class="sub">Enter money you can use now. Keep expected income separate.</p>
+      <div class="field"><label for="cash">Available money (KSh)</label><input id="cash" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 2500" value="2500"></div>
+      <div class="field"><label for="income">Next expected income (optional, KSh)</label><input id="income" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 4000"></div>
+      <div class="field"><label for="incomeDate">When do you expect it?</label><input id="incomeDate" type="date"></div>
+      <div class="hint">Expected income is not counted as money available until you receive it.</div>
+      <div class="field"><label for="extraDays">If income is late, test a delay</label><select id="extraDays"><option value="0">No delay</option><option value="3">3 extra days</option><option value="7">7 extra days</option><option value="14">14 extra days</option></select></div>
+    </section>
+
+    <section class="card">
+      <div class="expense-head"><div><h2>2. What must be paid?</h2><p class="sub" style="margin-bottom:0">Add expenses due before your next income.</p></div><button id="addExpense" class="btn small secondary" type="button">+ Add</button></div>
+      <div id="expenses">
+        <div class="expense-row"><input aria-label="Expense name" class="expense-name" value="Food" maxlength="60" placeholder="e.g. Food"><input aria-label="Expense amount in shillings" class="amount" type="number" min="0" step="1" inputmode="numeric" value="800" placeholder="KSh"><button class="remove" type="button" aria-label="Remove expense">×</button></div>
+        <div class="expense-row"><input aria-label="Expense name" class="expense-name" value="Transport" maxlength="60" placeholder="e.g. Transport"><input aria-label="Expense amount in shillings" class="amount" type="number" min="0" step="1" inputmode="numeric" value="400" placeholder="KSh"><button class="remove" type="button" aria-label="Remove expense">×</button></div>
+        <div class="expense-row"><input aria-label="Expense name" class="expense-name" value="Electricity" maxlength="60" placeholder="e.g. Electricity"><input aria-label="Expense amount in shillings" class="amount" type="number" min="0" step="1" inputmode="numeric" value="300" placeholder="KSh"><button class="remove" type="button" aria-label="Remove expense">×</button></div>
+      </div>
+      <div class="actions"><button id="calculate" class="btn" type="button">Update my plan</button><button id="reset" class="btn secondary" type="button">Reset demo</button></div>
+      <p class="smallprint">Only include expenses still unpaid. Avoid entering account numbers or other sensitive details.</p>
+    </section>
+  </div>
+
+  <section class="card results" aria-live="polite">
+    <h2>3. Your plan</h2>
+    <p class="sub">A planning estimate based on the figures and dates you enter.</p>
+    <div class="result-hero">
+      <div class="label">Estimated money left after listed expenses</div>
+      <div class="big-number" id="remaining">KSh 1,000</div>
+      <p id="resultNote">Based on your current available money and listed obligations.</p>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="mlabel">Available now</div><div class="mvalue" id="availableResult">KSh 2,500</div></div>
+      <div class="metric"><div class="mlabel">Listed expenses</div><div class="mvalue" id="expensesResult">KSh 1,500</div></div>
+      <div class="metric"><div class="mlabel">Days to plan for</div><div class="mvalue" id="daysResult">7 days</div></div>
+    </div>
+    <div id="status" class="status">Your listed expenses fit within the available amount. Check that you have included everything important.</div>
+    <div class="scenario">
+      <h2>4. If income arrives later</h2>
+      <p class="sub">This extends the planning period. Add any extra costs you expect during the delay to your expense list.</p>
+      <div class="metrics">
+        <div class="metric"><div class="mlabel">Planning period</div><div class="mvalue" id="scenarioDays">7 days</div></div>
+        <div class="metric"><div class="mlabel">Daily planning guide</div><div class="mvalue" id="dailyGuide">KSh 143</div></div>
+        <div class="metric"><div class="mlabel">Expected income</div><div class="mvalue" id="expectedResult">Not included</div></div>
+      </div>
+      <p class="smallprint" id="scenarioNote">The daily guide is a simple division of the remaining amount. It is not a guarantee that this amount will be sufficient.</p>
+    </div>
+  </section>
+
+  <div class="bottom">
+    <section class="card">
+      <h2>Built around trust</h2>
+      <ul class="plain-list">
+        <li>Your entries are calculated in this browser and are not sent to a Nafasi server by this demo.</li>
+        <li>This demo does not save your plan. Refreshing the page may reset the numbers.</li>
+        <li>Use made-up figures when testing or showing the demo to others.</li>
+        <li>No financial outcome is guaranteed, and this is not personalised investment or lending advice.</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Before you rely on your plan</h2>
+      <ul class="plain-list">
+        <li>Check that the listed expenses cover food, transport, bills, dependants and other needs.</li>
+        <li>Expected income can arrive late or be less than expected.</li>
+        <li>If essential costs exceed available money, a calculator cannot solve the shortfall. Consider contacting a trusted support organisation or creditor early where appropriate.</li>
+      </ul>
+    </section>
+  </div>
+  <footer class="footer">Nafasi is an early prototype, not a published financial service. <br>Make your money last — one clearer decision at a time.</footer>
+</div>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const today = new Date();
+  const localToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const toISO = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const defaultDate = new Date(localToday); defaultDate.setDate(defaultDate.getDate()+7);
+  $('incomeDate').value = toISO(defaultDate);
+  const money = n => 'KSh ' + Math.round(n).toLocaleString('en-KE');
+  function getExpenses(){
+    return [...$('expenses').querySelectorAll('.expense-row')].map(row => {
+      const raw = row.querySelector('.amount').value;
+      return {name: row.querySelector('.expense-name').value.trim(), amount: raw === '' ? 0 : Number(raw)};
+    });
+  }
+  function daysUntil(dateValue){
+    if(!dateValue) return null;
+    const parts = dateValue.split('-').map(Number);
+    if(parts.length !== 3 || parts.some(Number.isNaN)) return null;
+    const date = new Date(parts[0], parts[1]-1, parts[2]);
+    return Math.max(0, Math.ceil((date-localToday)/86400000));
+  }
+  function calculate(){
+    const cashRaw = $('cash').value;
+    const cash = cashRaw === '' ? 0 : Number(cashRaw);
+    const incomeRaw = $('income').value;
+    const income = incomeRaw === '' ? null : Number(incomeRaw);
+    const expenseItems = getExpenses();
+    const invalid = !Number.isFinite(cash) || cash < 0 || expenseItems.some(e => !Number.isFinite(e.amount) || e.amount < 0) || (income !== null && (!Number.isFinite(income) || income < 0));
+    if(invalid){
+      $('status').className = 'status bad';
+      $('status').textContent = 'Please enter valid amounts of zero or more.';
+      return;
+    }
+    const expenseTotal = expenseItems.reduce((sum,e)=>sum+e.amount,0);
+    const remaining = cash-expenseTotal;
+    const baseDays = daysUntil($('incomeDate').value);
+    const extra = Number($('extraDays').value);
+    const hasDate = baseDays !== null && $('incomeDate').value !== '';
+    const planningDays = hasDate ? Math.max(1,baseDays+extra) : null;
+    const guide = planningDays !== null ? Math.max(0,remaining)/planningDays : null;
+    $('availableResult').textContent = money(cash);
+    $('expensesResult').textContent = money(expenseTotal);
+    $('remaining').textContent = (remaining < 0 ? '−' : '') + money(Math.abs(remaining));
+    $('daysResult').textContent = hasDate ? baseDays + (baseDays===1?' day':' days') : 'Not set';
+    $('scenarioDays').textContent = planningDays !== null ? planningDays + (planningDays===1?' day':' days') : 'Not set';
+    $('dailyGuide').textContent = guide === null ? 'Not available' : money(guide);
+    $('expectedResult').textContent = income === null ? 'Not entered' : money(income);
+    $('resultNote').textContent = remaining < 0 ? 'Your listed expenses exceed the money available by ' + money(Math.abs(remaining)) + '. Expected income is not counted yet.' : 'Expected income is not counted in this remaining amount.';
+    const status = $('status');
+    if(remaining < 0){
+      status.className='status bad';
+      status.textContent='Shortfall: your listed expenses are greater than the money available now. Review the amounts and due dates; this plan cannot remove the shortfall.';
+    } else if(!hasDate){
+      status.className='status warn';
+      status.textContent='Add the date you expect your next income to get a daily planning guide. Your expected income is uncertain.';
+    } else if(baseDays===0){
+      status.className='status warn';
+      status.textContent='Your expected income date is today or has passed. Update the date if needed. Do not assume the payment has arrived until it is available.';
+    } else {
+      status.className='status';
+      status.textContent='Your listed expenses fit within the available amount. Check for missing costs and remember that expected income may be delayed.';
+    }
+    $('scenarioNote').textContent = guide === null ? 'Set an expected income date to calculate a daily planning guide.' : 'Guide = remaining money after listed expenses ÷ ' + planningDays + ' days. It is not a guarantee that this amount will be sufficient.';
+  }
+  function addExpense(name='', amount=''){
+    const row=document.createElement('div'); row.className='expense-row';
+    const nameInput=document.createElement('input'); nameInput.className='expense-name'; nameInput.setAttribute('aria-label','Expense name'); nameInput.maxLength=60; nameInput.placeholder='e.g. Food'; nameInput.value=name;
+    const amountInput=document.createElement('input'); amountInput.className='amount'; amountInput.type='number'; amountInput.min='0'; amountInput.step='1'; amountInput.inputMode='numeric'; amountInput.setAttribute('aria-label','Expense amount in shillings'); amountInput.placeholder='KSh'; amountInput.value=amount;
+    const remove=document.createElement('button'); remove.type='button'; remove.className='remove'; remove.setAttribute('aria-label','Remove expense'); remove.textContent='×';
+    remove.addEventListener('click',()=>{row.remove();calculate()});
+    nameInput.addEventListener('input',calculate); amountInput.addEventListener('input',calculate);
+    row.append(nameInput,amountInput,remove); $('expenses').appendChild(row);
+  }
+  $('expenses').querySelectorAll('.remove').forEach(btn=>btn.addEventListener('click',()=>{btn.closest('.expense-row').remove();calculate()}));
+  $('addExpense').addEventListener('click',()=>addExpense());
+  $('calculate').addEventListener('click',calculate);
+  $('reset').addEventListener('click',()=>{
+    $('cash').value='2500'; $('income').value=''; $('incomeDate').value=toISO(defaultDate); $('extraDays').value='0'; $('expenses').innerHTML='';
+    addExpense('Food','800'); addExpense('Transport','400'); addExpense('Electricity','300'); calculate();
+  });
+  ['cash','income','incomeDate','extraDays'].forEach(id=>$(id).addEventListener('input',calculate));
+  calculate();
+})();
+</script>
+</body>
+</html>
