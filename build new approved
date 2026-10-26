@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#245c43">
+<meta name="description" content="Nafasi helps you plan irregular income, prepare for expenses and build savings privately.">
+<title>Nafasi — Plan. Save. Spend smarter.</title>
+<style>
+:root {
+  --green:#245c43; --green2:#347653; --pale:#e7f0e6;
+  --cream:#f8f7f0; --paper:#fffef9; --ink:#24342b;
+  --muted:#748078; --line:#e4e8df; --red:#b94343;
+  --gold:#d8ad55; --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 system-ui,-apple-system,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9dc9a8;outline-offset:2px}
+.app{min-height:100vh}
+header{height:76px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;gap:15px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--green);font-size:23px;font-weight:850;letter-spacing:-1px}
+.brand-mark{display:grid;place-items:center;width:38px;height:38px;background:var(--green);color:white;border-radius:13px;font-size:23px}
+.tagline{color:var(--muted);font-size:12px}
+.privacy{font-size:12px;color:var(--green);background:var(--pale);padding:8px 12px;border-radius:30px;white-space:nowrap}
+.layout{display:grid;grid-template-columns:225px minmax(0,1fr);max-width:1500px;margin:auto;min-height:calc(100vh - 76px)}
+aside{padding:28px 16px;border-right:1px solid var(--line)}
+.nav-label{color:var(--muted);font-size:11px;letter-spacing:1.4px;font-weight:800;padding:0 12px;margin:12px 0}
+.nav{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;color:#536258;text-align:left;padding:13px 12px;border-radius:12px;margin:3px 0;font-weight:650}
+.nav:hover{background:#f0f3ec}.nav.active{background:var(--pale);color:var(--green)}
+.nav .ico{font-size:19px;width:25px;text-align:center}
+.aside-note{margin-top:35px;padding:16px;background:var(--paper);border:1px solid var(--line);border-radius:15px;font-size:12px;color:var(--muted)}
+main{padding:34px clamp(18px,4vw,54px);min-width:0}
+.page{display:none}.page.active{display:block}
+.eyebrow{color:var(--green2);font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+h1{font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-1.2px;margin:8px 0}
+h2{font-size:19px;letter-spacing:-.4px;margin:0 0 7px}
+h3{font-size:15px;margin:0 0 8px}
+p{margin:5px 0;color:var(--muted)}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:25px}
+.date-label{color:var(--muted);font-size:13px;margin-top:8px}
+.grid{display:grid;gap:17px}
+.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:20px}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:21px;min-width:0}
+.card-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.stat-label{font-size:13px;color:var(--muted)}
+.stat-value{font-size:clamp(21px,2.4vw,30px);font-weight:800;letter-spacing:-.8px;margin:9px 0 4px;overflow-wrap:anywhere}
+.stat-foot{font-size:12px;color:var(--muted)}
+.stat-icon{display:grid;place-items:center;width:40px;height:40px;background:var(--pale);border-radius:13px;font-size:20px}
+.hero{background:var(--green);color:white;border-radius:22px;padding:27px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.hero p{color:#d7e6d9;max-width:470px}.hero h2{font-size:24px}
+.hero .btn{background:white;color:var(--green)}
+.btn{border:0;border-radius:11px;background:var(--green);color:white;font-weight:750;padding:11px 16px;display:inline-flex;justify-content:center;align-items:center;gap:7px}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary{background:var(--pale);color:var(--green)}
+.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}
+.btn.danger{background:#f9e9e7;color:var(--red)}
+.btn.small{font-size:12px;padding:7px 10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.field label{font-size:13px;font-weight:700}
+.field input,.field select,.field textarea{width:100%;min-width:0;background:white;color:var(--ink);border:1px solid #dce2d9;border-radius:10px;padding:11px 12px}
+.field small{color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 13px}
+.form-grid .full{grid-column:1/-1}
+.money{font-variant-numeric:tabular-nums}
+.meter{height:9px;background:#e9ede5;border-radius:20px;overflow:hidden;margin:12px 0}
+.meter span{display:block;height:100%;background:var(--green2);border-radius:20px;transition:width .2s}
+.list{display:flex;flex-direction:column}
+.list-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.list-row:last-child{border-bottom:0}
+.list-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:#f0f1e8;flex-shrink:0;font-size:18px}
+.list-info{flex:1;min-width:0}.list-info strong{display:block;font-size:14px;overflow-wrap:anywhere}
+.list-info small{display:block;color:var(--muted);font-size:12px}
+.list-amount{font-weight:750;text-align:right;font-size:14px;white-space:nowrap}
+.pill{display:inline-block;border-radius:30px;padding:4px 8px;background:var(--pale);color:var(--green);font-size:11px;font-weight:750}
+.pill.pending{background:#fbf0d8;color:#835e17}.pill.paid{background:#e5f2e6;color:#286340}
+.pill.overdue{background:#f9e9e7;color:var(--red)}
+.empty{padding:25px 10px;text-align:center;color:var(--muted);font-size:13px}
+.notice{padding:14px 16px;border-radius:13px;background:#f0f3e9;color:#455b49;font-size:13px;margin:14px 0}
+.notice.warn{background:#fbf0d8;color:#795918}
+.notice.error{background:#f9e9e7;color:#983d3d}
+.section-gap{margin-top:20px}
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+.goal-card{padding:17px;border:1px solid var(--line);border-radius:15px;margin-bottom:12px}
+.goal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.goal-emoji{font-size:24px}
+.goal-amount{font-weight:800;font-size:19px;margin-top:10px}
+.tip-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tip{background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:20px}
+.tip .tip-icon{font-size:25px;margin-bottom:10px}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px;padding:15px}
+.mobile-nav{display:none}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+td:last-child,th:last-child{text-align:right}
+.toast{position:fixed;bottom:22px;right:22px;max-width:calc(100% - 44px);background:#203d2c;color:white;padding:13px 17px;border-radius:12px;box-shadow:0 8px 35px #0002;z-index:10}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr}
+ aside{display:none}
+ main{padding:25px 17px 100px}
+ .mobile-nav{display:flex;position:fixed;z-index:5;bottom:0;left:0;right:0;background:var(--paper);border-top:1px solid var(--line);justify-content:space-around;padding:7px 3px max(7px,env(safe-area-inset-bottom))}
+ .mobile-nav .nav{flex-direction:column;gap:2px;padding:6px 3px;margin:0;font-size:10px;align-items:center}
+ .mobile-nav .ico{font-size:18px}
+ .mobile-nav .nav span:last-child{white-space:nowrap}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero{align-items:flex-start;flex-direction:column}
+ header{height:66px;padding:0 17px}
+ .privacy{font-size:10px;padding:7px 9px}
+}
+@media(max-width:520px){
+ .stats,.two,.tip-grid{grid-template-columns:1fr}
+ .form-grid{grid-template-columns:1fr}
+ .form-grid .full{grid-column:auto}
+ .card{padding:17px}
+ .page-head{flex-direction:column}
+ .stat-value{font-size:25px}
+ .mobile-nav .nav{font-size:9px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div>
+    <div class="brand"><span class="brand-mark">✳</span> nafasi</div>
+    <div class="tagline">Plan. Save. Spend smarter.</div>
+  </div>
+  <div class="privacy">● Your plans stay in this browser</div>
+</header>
+
+<div class="layout">
+<aside>
+  <div class="nav-label">YOUR SPACE</div>
+  <nav id="sideNav" aria-label="Main navigation"></nav>
+  <div class="aside-note"><strong>Small steps count.</strong><br><br>Nafasi helps you plan with the money you have, prepare for what's next and move at your own pace.</div>
+</aside>
+
+<main>
+<section class="page active" id="page-overview">
+  <div class="page-head">
+    <div><div class="eyebrow">YOUR MONEY, YOUR PACE</div><h1>Make room for what matters.</h1><p>A clearer picture of your money starts here.</p></div>
+    <div class="date-label" id="todayLabel"></div>
+  </div>
+  <div class="hero">
+    <div><h2>A little clarity goes a long way.</h2><p>Plan around the money you have today. Keep expected income separate until it arrives.</p></div>
+    <button class="btn" data-go="planner">Plan my money →</button>
+  </div>
+  <div class="grid stats">
+    <div class="card"><div class="card-title"><span class="stat-label">Cash available now</span><span class="stat-icon">💵</span></div><div class="stat-value money" id="ovCash">KSh 0</div><div class="stat-foot">Your current available money</div></div>
+    <div class="card"><div class="card-title"><span class="stat-label">Unpaid planned expenses</span><span class="stat-icon">🧾</span></div><div class="stat-value money" id="ovBills">KSh 0</div><div class="stat-foot" id="ovBillCount">No expenses added yet</div></div>
+    <div class="card"><div class="card-title"><span class="stat-label">After planned expenses</span><span class="stat-icon">🌿</span></div><div class="stat-value money" id="ovRemaining">KSh 0</div><div class="stat-foot" id="ovRemainingNote">Add your money plan to begin</div></div>
+  </div>
+  <div class="grid two">
+    <div class="card">
+      <div class="card-title"><div><h2>Your daily guide</h2><p>Planning estimate, not a spending rule.</p></div><span class="stat-icon">🗓️</span></div>
+      <div class="stat-value money" id="ovDaily">KSh 0</div>
+      <p id="ovDays">Set your next income date in Money Planner.</p>
+      <div class="notice">This estimate divides the money left after unpaid planned expenses by your planning days. Add everyday costs that you expect to pay.</div>
+      <button class="btn secondary" data-go="planner">Open money planner</button>
+    </div>
+    <div class="card">
+      <div class="card-title"><div><h2>Savings snapshot</h2><p>Your goals, one step at a time.</p></div><span class="stat-icon">🎯</span></div>
+      <div class="stat-value" id="ovGoalCount">0 goals</div>
+      <p id="ovGoalSummary">Your next goal can start small.</p>
+      <div class="meter"><span id="ovGoalMeter" style="width:0%"></span></div>
+      <button class="btn secondary" data-go="savings">View savings goals</button>
+    </div>
+  </div>
+  <div class="card section-gap"><div class="card-title"><div><h2>Coming up</h2><p>Unpaid expenses you've entered.</p></div><button class="btn ghost small" data-go="planner">Manage expenses</button></div><div class="list" id="ovUpcoming"></div></div>
+</section>
+
+<section class="page" id="page-planner">
+  <div class="page-head"><div><div class="eyebrow">MONEY PLANNER</div><h1>Give your money a plan.</h1><p>Work with what you have, not what you hope will arrive.</p></div></div>
+  <div class="notice">Expected income is never included in available cash or the remaining balance until you mark it as received. Estimates are only as complete as the expenses you enter.</div>
+  <div class="grid two">
+    <div class="card">
+      <h2>Money available now</h2><p>Enter the cash you can actually use today.</p>
+      <form id="cashForm" class="section-gap">
+        <div class="field"><label for="cashInput">Available amount (KSh)</label><input id="cashInput" type="number" min="0" step="0.01" required placeholder="e.g. 3500"></div>
+        <button class="btn" type="submit">Save available cash</button>
+      </form>
+      <hr>
+      <h2>Next expected income</h2><p>Keep uncertain income separate.</p>
+      <form id="incomeForm" class="section-gap">
+        <div class="field"><label for="incomeAmount">Expected amount (KSh)</label><input id="incomeAmount" type="number" min="0" step="0.01" placeholder="e.g. 5000"></div>
+        <div class="field"><label for="incomeDate">Expected date</label><input id="incomeDate" type="date"></div>
+        <div class="field"><label for="incomeNote">Source or note (optional)</label><input id="incomeNote" maxlength="100" placeholder="e.g. weekly pay"></div>
+        <div class="actions"><button class="btn" type="submit">Save expected income</button><button class="btn ghost" type="button" id="clearIncome">Clear</button></div>
+      </form>
+      <div id="incomeSummary" class="notice">No expected income date set.</div>
+    </div>
+    <div class="card">
+      <h2>Your plan at a glance</h2><p>Based on available cash and unpaid expenses.</p>
+      <div class="stat-value money" id="plRemaining">KSh 0</div><div class="stat-foot">Remaining after unpaid expenses</div>
+      <div id="plStatus" class="notice">Enter available cash and your expenses.</div>
+      <div class="grid two section-gap">
+        <div><div class="stat-label">Unpaid expenses</div><strong class="money" id="plBills">KSh 0</strong></div>
+        <div><div class="stat-label">Daily guide</div><strong class="money" id="plDaily">KSh 0</strong></div>
+        <div><div class="stat-label">Planning days</div><strong id="plDays">—</strong></div>
+        <div><div class="stat-label">Expected income</div><strong class="money" id="plExpected">KSh 0</strong></div>
+      </div>
+      <hr>
+      <h3>What if income is delayed?</h3><p>These scenarios add days to your current plan. They do not predict future expenses.</p>
+      <div class="actions section-gap">
+        <button class="btn secondary small" data-delay="3">+3 days</button>
+        <button class="btn secondary small" data-delay="7">+7 days</button>
+        <button class="btn secondary small" data-delay="14">+14 days</button>
+      </div>
+      <div id="delayResult" class="notice">Choose a delay to see a revised daily guide.</div>
+    </div>
+  </div>
+  <div class="card section-gap">
+    <div class="card-title"><div><h2>Plan an expense</h2><p>Add bills and essentials due before your next income.</p></div></div>
+    <form id="expenseForm" class="form-grid">
+      <div class="field"><label for="expenseName">Expense name</label><input id="expenseName" maxlength="80" required placeholder="e.g. Transport"></div>
+      <div class="field"><label for="expenseAmount">Amount (KSh)</label><input id="expenseAmount" type="number" min="0.01" step="0.01" required placeholder="e.g. 250"></div>
+      <div class="field"><label for="expenseDate">Due date (optional)</label><input id="expenseDate" type="date"></div>
+      <div class="field"><label for="expenseCategory">Category</label><select id="expenseCategory"><option>Essential</option><option>Housing</option><option>Food</option><option>Transport</option><option>Utilities</option><option>Health</option><option>Family</option><option>Debt payment</option><option>Other</option></select></div>
+      <div class="full"><button class="btn" type="submit">＋ Add expense</button></div>
+    </form>
+  </div>
+  <div class="card section-gap"><div class="card-title"><div><h2>Your expenses</h2><p>Mark an expense as paid when you've paid it.</p></div><span class="pill" id="expenseCount">0 expenses</span></div><div class="table-wrap"><table><thead><tr><th>Expense</th><th>Due date</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="expenseRows"></tbody></table></div><div id="expenseEmpty" class="empty">No expenses yet. Add one above to begin your plan.</div></div>
+</section>
+
+<section class="page" id="page-savings">
+  <div class="page-head"><div><div class="eyebrow">SAVINGS GOALS</div><h1>Make space for future you.</h1><p>Every contribution counts. Start with what feels manageable.</p></div></div>
+  <div class="grid stats">
+    <div class="card"><div class="stat-label">Total saved toward goals</div><div class="stat-value money" id="svTotal">KSh 0</div></div>
+    <div class="card"><div class="stat-label">Total goal targets</div><div class="stat-value money" id="svTargets">KSh 0</div></div>
+    <div class="card"><div class="stat-label">Goals completed</div><div class="stat-value" id="svComplete">0</div></div>
+  </div>
+  <div class="grid two">
+    <div class="card"><h2>Create a savings goal</h2><p>Name something you want to work toward.</p>
+      <form id="goalForm" class="section-gap">
+        <div class="field"><label for="goalName">Goal name</label><input id="goalName" maxlength="80" required placeholder="e.g. Emergency cushion"></div>
+        <div class="field"><label for="goalTarget">Target amount (KSh)</label><input id="goalTarget" type="number" min="0.01" step="0.01" required placeholder="e.g. 10000"></div>
+        <div class="field"><label for="goalCurrent">Already saved (KSh)</label><input id="goalCurrent" type="number" min="0" step="0.01" value="0"></div>
+        <button class="btn" type="submit">＋ Create goal</button>
+      </form>
+    </div>
+    <div class="card"><h2>Gentle reminder</h2><p>Savings should support your needs, not create pressure.</p><div class="notice">Cover essential expenses first. You can make a goal smaller, pause contributions or change your target whenever your circumstances change.</div><div class="notice">Money shown here is your own record of savings goals. Nafasi does not hold or transfer your money.</div></div>
+  </div>
+  <div class="section-gap"><h2>Your goals</h2><p class="section-gap" id="goalCountText">No goals yet.</p><div id="goalList" class="grid two section-gap"></div></div>
+</section>
+
+<section class="page" id="page-opportunities">
+  <div class="page-head"><div><div class="eyebrow">OPPORTUNITIES</div><h1>Small ideas. More options.</h1><p>Practical ways to make your plan more flexible.</p></div></div>
+  <div class="notice">These are general ideas, not promises of income or personalized financial advice. Check costs, terms and the legitimacy of any opportunity before committing money.</div>
+  <div class="grid tip-grid">
+    <article class="tip"><div class="tip-icon">🧺</div><h2>Separate needs from wants</h2><p>List what must be paid before your next income. Then see what remains for flexible spending.</p><button class="btn secondary small section-gap" data-go="planner">Review my plan</button></article>
+    <article class="tip"><div class="tip-icon">🪙</div><h2>Try a flexible savings goal</h2><p>Choose a small target that fits your current situation. It is okay to contribute irregularly.</p><button class="btn secondary small section-gap" data-go="savings">Create a goal</button></article>
+    <article class="tip"><div class="tip-icon">🚌</div><h2>Budget for work costs</h2><p>If you are job hunting or working casual shifts, consider transport, meals, airtime and required documents.</p><button class="btn secondary small" data-go="planner">Plan expenses</button></article>
+    <article class="tip"><div class="tip-icon">📆</div><h2>Prepare for late payments</h2><p>Think about which expenses can be rescheduled and who you can contact early if income is delayed.</p><button class="btn secondary small" data-go="planner">Test a delay</button></article>
+    <article class="tip"><div class="tip-icon">🔎</div><h2>Check opportunities carefully</h2><p>Verify employers through official channels. Be cautious of jobs that demand upfront fees, PINs or one-time passwords.</p></article>
+    <article class="tip"><div class="tip-icon">🛡️</div><h2>Protect your money details</h2><p>Never share your M-Pesa PIN, banking password or one-time password to receive a job or a payment.</p></article>
+  </div>
+  <div class="card section-gap"><h2>Build a useful next step</h2><p>Choose one action you can realistically do this week. A small step you can repeat is more useful than a perfect plan you cannot maintain.</p></div>
+</section>
+
+<section class="page" id="page-activity">
+  <div class="page-head"><div><div class="eyebrow">YOUR ACTIVITY</div><h1>Your plan, in one place.</h1><p>Review changes made in this browser and export your data.</p></div></div>
+  <div class="grid stats">
+    <div class="card"><div class="stat-label">Recorded activities</div><div class="stat-value" id="acCount">0</div></div>
+    <div class="card"><div class="stat-label">Expenses recorded</div><div class="stat-value" id="acExpenses">0</div></div>
+    <div class="card"><div class="stat-label">Savings goals</div><div class="stat-value" id="acGoals">0</div></div>
+  </div>
+  <div class="card"><div class="card-title"><div><h2>Recent activity</h2><p>Newest entries appear first.</p></div><button class="btn ghost small" id="clearActivity">Clear history</button></div><div class="list" id="activityList"></div><div id="activityEmpty" class="empty">Your activity will appear here as you use Nafasi.</div></div>
+  <div class="card section-gap"><h2>Your data</h2><p>Export a copy before clearing browser data or resetting Nafasi.</p><div class="actions section-gap"><button class="btn" id="exportBtn">↓ Export my data (JSON)</button><button class="btn secondary" id="exportCsv">↓ Export expenses (CSV)</button><button class="btn danger" id="resetBtn">Reset all Nafasi data</button></div><div class="notice">This version stores its planning data in local browser storage. Anyone who can use this browser profile may be able to access it. Exported files are not encrypted. Avoid entering PINs, passwords, account numbers or other sensitive information.</div></div>
+</section>
+
+<footer>Nafasi · Plan. Save. Spend smarter. <br>Planning estimates only. You stay in control.</footer>
+</main>
+</div>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation"></nav>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const STORAGE_KEY="nafasi_app_v1";
+const NAV=[
+ {id:"overview",label:"Overview",icon:"⌂"},
+ {id:"planner",label:"Money Planner",icon:"◈"},
+ {id:"savings",label:"Savings Goals",icon:"◎"},
+ {id:"opportunities",label:"Opportunities",icon:"✳"},
+ {id:"activity",label:"Activity",icon:"↺"}
+];
+const $=id=>document.getElementById(id);
+const money=n=>"KSh "+Number(n||0).toLocaleString("en-KE",{minimumFractionDigits:0,maximumFractionDigits:2});
+const num=v=>Number.isFinite(Number(v))?Number(v):0;
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const dateLabel=d=>{if(!d)return "No date set";const x=new Date(d+"T12:00:00");return Number.isNaN(x.getTime())?d:x.toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"})};
+const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let toastTimer;
+function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.add("hidden"),3000)}
+function newState(){return {cash:0,income:null,expenses:[],goals:[],activity:[]}}
+function loadState(){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw)return newState();
+  const s=JSON.parse(raw);
+  if(!s||typeof s!=="object")return newState();
+  return {
+   cash:Math.max(0,num(s.cash)),
+   income:s.income&&typeof s.income==="object"?{amount:Math.max(0,num(s.income.amount)),date:String(s.income.date||""),note:String(s.income.note||"")}:null,
+   expenses:Array.isArray(s.expenses)?s.expenses.filter(x=>x&&typeof x==="object").map(x=>({id:String(x.id||uid()),name:String(x.name||"Expense"),amount:Math.max(0,num(x.amount)),date:String(x.date||""),category:String(x.category||"Essential"),paid:!!x.paid,created:String(x.created||new Date().toISOString())})):[],
+   goals:Array.isArray(s.goals)?s.goals.filter(x=>x&&typeof x==="object").map(x=>({id:String(x.id||uid()),name:String(x.name||"Goal"),target:Math.max(0,num(x.target)),current:Math.max(0,num(x.current)),created:String(x.created||new Date().toISOString())})):[],
+   activity:Array.isArray(s.activity)?s.activity.filter(x=>x&&typeof x==="object").slice(0,500).map(x=>({id:String(x.id||uid()),message:String(x.message||""),date:String(x.date||new Date().toISOString())})):[],
+  };
+ }catch(e){return newState()}
+}
+function uid(){return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,9)}
+let state=loadState();
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));return true}catch(e){toast("Could not save in this browser. Check storage settings.");return false}}
+function log(message){state.activity.unshift({id:uid(),message,date:new Date().toISOString()});state.activity=state.activity.slice(0,500)}
+function commit(message){if(message)log(message);save();render()}
+function unpaid(){return state.expenses.filter(e=>!e.paid)}
+function bills(){return unpaid().reduce((sum,e)=>sum+e.amount,0)}
+function remaining(){return state.cash-bills()}
+function daysToIncome(){if(!state.income||!state.income.date)return null;const diff=new Date(state.income.date+"T12:00:00")-new Date(today()+"T12:00:00");return Math.ceil(diff/86400000)}
+function planningDays(){const d=daysToIncome();return d===null?null:Math.max(1,d)}
+function daily(days=planningDays()){return days?Math.max(0,remaining())/Math.max(1,days):0}
+function safePercent(a,b){return b>0?Math.min(100,Math.max(0,a/b*100)):0}
+function navHTML(){return NAV.map(n=>`<button type="button" class="nav ${n.id==="overview"?"active":""}" data-go="${n.id}"><span class="ico">${n.icon}</span><span>${n.label}</span></button>`).join("")}
+$("sideNav").innerHTML=navHTML();$("mobileNav").innerHTML=navHTML();
+function go(id){
+ if(!NAV.some(n=>n.id===id))return;
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+id));
+ document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.go===id));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");
+ if(b)go(b.dataset.go);
+ const delay=e.target.closest("[data-delay]");
+ if(delay)showDelay(Number(delay.dataset.delay));
+ const act=e.target.closest("[data-expense-action]");
+ if(act)expenseAction(act.dataset.expenseAction,act.dataset.id);
+ const goalAct=e.target.closest("[data-goal-action]");
+ if(goalAct)goalAction(goalAct.dataset.goalAction,goalAct.dataset.id);
+});
+function render(){
+ $("todayLabel").textContent=new Date().toLocaleDateString("en-KE",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
+ $("cashInput").value=state.cash||"";
+ $("incomeAmount").value=state.income?state.income.amount:"";
+ $("incomeDate").value=state.income?state.income.date:"";
+ $("incomeNote").value=state.income?state.income.note:"";
+ renderOverview();renderPlanner();renderGoals();renderActivity();
+}
+function renderOverview(){
+ const rem=remaining(),b=bills(),days=planningDays();
+ $("ovCash").textContent=money(state.cash);$("ovBills").textContent=money(b);
+ $("ovBillCount").textContent=unpaid().length+" unpaid expense"+(unpaid().length===1?"":"s");
+ $("ovRemaining").textContent=money(rem);
+ $("ovRemaining").style.color=rem<0?"var(--red)":"var(--ink)";
+ $("ovRemainingNote").textContent=rem<0?"Your planned expenses exceed available cash.": "After expenses you've entered";
+ $("ovDaily").textContent=money(daily());
+ $("ovDays").textContent=days===null?"Set your next expected income date in Money Planner.":daysToIncome()<0?"Your expected income date has passed. Update it to refresh the guide.":daysToIncome()===0?"Your expected income date is today.":daysToIncome()+" day"+(daysToIncome()===1?"":"s")+" until expected income.";
+ const total=state.goals.reduce((s,g)=>s+g.target,0),saved=state.goals.reduce((s,g)=>s+Math.min(g.current,g.target),0);
+ $("ovGoalCount").textContent=state.goals.length+" goal"+(state.goals.length===1?"":"s");
+ $("ovGoalSummary").textContent=state.goals.length?money(saved)+" saved toward "+money(total)+" in targets.":"Your next goal can start small.";
+ $("ovGoalMeter").style.width=safePercent(saved,total)+"%";
+ const upcoming=unpaid().slice().sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999")).slice(0,5);
+ $("ovUpcoming").innerHTML=upcoming.length?upcoming.map(e=>`<div class="list-row"><div class="list-icon">🧾</div><div class="list-info"><strong>${escapeHTML(e.name)}</strong><small>${escapeHTML(e.category)} · ${e.date?escapeHTML(dateLabel(e.date)):"No due date"}</small></div><div class="list-amount money">${money(e.amount)}</div></div>`).join(""):'<div class="empty">No unpaid expenses. Add any upcoming essentials in your Money Planner.</div>';
+}
+function renderPlanner(){
+ const rem=remaining(),b=bills(),days=planningDays();
+ $("plRemaining").textContent=money(rem);$("plRemaining").style.color=rem<0?"var(--red)":"var(--ink)";
+ $("plBills").textContent=money(b);$("plDaily").textContent=money(daily());$("plDays").textContent=days===null?"Not set":daysToIncome()<0?"Date passed":daysToIncome()===0?"Today":days;
+ $("plExpected").textContent=money(state.income?state.income.amount:0);
+ if(rem<0){$("plStatus").className="notice error";$("plStatus").textContent="Shortfall: "+money(Math.abs(rem))+". Your unpaid planned expenses exceed your available cash. Review dates and amounts; don't count expected income until received."}
+ else {$("plStatus").className="notice";$("plStatus").textContent="You have "+money(rem)+" after the unpaid expenses you've listed. This may change when you add everyday costs."}
+ $("incomeSummary").textContent=state.income?(money(state.income.amount)+" expected "+(state.income.date?"on "+dateLabel(state.income.date):"on an unspecified date")+(state.income.note?" · "+state.income.note:"")+". Not included in available cash."): "No expected income saved.";
+ const rows=state.expenses.slice().sort((a,b)=>(a.paid?1:0)-(b.paid?1:0)||(a.date||"9999").localeCompare(b.date||"9999"));
+ $("expenseRows").innerHTML=rows.map(e=>{
+  const overdue=!e.paid&&e.date&&e.date<today();
+  return `<tr><td><strong>${escapeHTML(e.name)}</strong><br><span class="muted">${escapeHTML(e.category)}</span></td><td>${e.date?escapeHTML(dateLabel(e.date)):"—"}</td><td class="money">${money(e.amount)}</td><td><span class="pill ${e.paid?"paid":overdue?"overdue":"pending"}">${e.paid?"Paid":overdue?"Overdue":"Unpaid"}</span></td><td><div class="actions">${e.paid?`<button class="btn ghost small" data-expense-action="unpay" data-id="${escapeHTML(e.id)}">Undo</button>`:`<button class="btn secondary small" data-expense-action="pay" data-id="${escapeHTML(e.id)}">Paid</button>`}<button class="btn danger small" data-expense-action="delete" data-id="${escapeHTML(e.id)}" aria-label="Delete ${escapeHTML(e.name)}">×</button></div></td></tr>`;
+ }).join("");
+ $("expenseEmpty").classList.toggle("hidden",rows.length>0);
+ $("expenseCount").textContent=rows.length+" expense"+(rows.length===1?"":"s");
+}
+function showDelay(extra){
+ const days=planningDays();
+ if(days===null){$("delayResult").textContent="First set your next expected income date. This scenario assumes no extra expenses; add them if you expect them.";return}
+ const revised=Math.max(1,days+extra),d=daily(revised);
+ $("delayResult").textContent="If income arrives "+extra+" days later, your planning period becomes "+revised+" day"+(revised===1?"":"s")+". With no extra expenses added, the revised daily guide is "+money(d)+". Add any extra costs for a more useful estimate.";
+}
+function expenseAction(action,id){
+ const e=state.expenses.find(x=>x.id===id);if(!e)return;
+ if(action==="delete"){
+  if(!confirm("Delete this expense from Nafasi?"))return;
+  state.expenses=state.expenses.filter(x=>x.id!==id);commit("Deleted expense: "+e.name);
+ }else{
+  e.paid=action==="pay";commit((e.paid?"Marked paid: ":"Marked unpaid: ")+e.name);
+ }
+ toast("Expense updated.");
+}
+function renderGoals(){
+ const saved=state.goals.reduce((s,g)=>s+Math.min(g.current,g.target),0),targets=state.goals.reduce((s,g)=>s+g.target,0);
+ $("svTotal").textContent=money(saved);$("svTargets").textContent=money(targets);
+ $("svComplete").textContent=state.goals.filter(g=>g.target>0&&g.current>=g.target).length;
+ $("goalCountText").textContent=state.goals.length?state.goals.length+" goal"+(state.goals.length===1?"":"s")+" you're working toward.":"No goals yet. Create your first goal above.";
+ $("goalList").innerHTML=state.goals.length?state.goals.map(g=>{
+  const pct=safePercent(g.current,g.target),done=g.current>=g.target;
+  return `<article class="goal-card"><div class="goal-top"><div><div class="goal-emoji">🌱</div><h3>${escapeHTML(g.name)}</h3><span class="pill ${done?"paid":""}">${done?"Target reached":Math.round(pct)+"% saved"}</span></div><button class="btn danger small" data-goal-action="delete" data-id="${escapeHTML(g.id)}">Delete</button></div><div class="goal-amount money">${money(g.current)} <span class="muted" style="font-size:13px;font-weight:500">of ${money(g.target)}</span></div><div class="meter"><span style="width:${pct}%"></span></div><div class="actions"><button class="btn secondary small" data-goal-action="contribute" data-id="${escapeHTML(g.id)}">＋ Add contribution</button><button class="btn ghost small" data-goal-action="edit" data-id="${escapeHTML(g.id)}">Edit goal</button></div></article>`;
+ }).join(""):'<div class="card empty">Your goals will appear here. Start with something meaningful and realistic for you.</div>';
+ $("acGoals").textContent=state.goals.length;
+}
+function goalAction(action,id){
+ const g=state.goals.find(x=>x.id===id);if(!g)return;
+ if(action==="delete"){
+  if(!confirm("Delete the goal "+g.name+"?"))return;
+  state.goals=state.goals.filter(x=>x.id!==id);commit("Deleted savings goal: "+g.name);toast("Goal deleted.");return;
+ }
+ if(action==="contribute"){
+  const value=prompt("How much are you adding to "+g.name+"? Enter amount in KSh.");
+  if(value===null)return;
+  if(value.trim()===""||!Number.isFinite(Number(value))||Number(value)<=0){toast("Enter a contribution greater than zero.");return}
+  g.current+=Number(value);commit("Added "+money(Number(value))+" to goal: "+g.name);toast("Contribution saved.");return;
+ }
+ if(action==="edit"){
+  const name=prompt("Goal name:",g.name);if(name===null)return;
+  if(!name.trim()){toast("Goal name cannot be empty.");return}
+  const target=prompt("Target amount in KSh:",String(g.target));if(target===null)return;
+  if(!Number.isFinite(Number(target))||Number(target)<=0){toast("Enter a target greater than zero.");return}
+  const current=prompt("Amount already saved in KSh:",String(g.current));if(current===null)return;
+  if(!Number.isFinite(Number(current))||Number(current)<0){toast("Enter a valid saved amount.");return}
+  g.name=name.trim();g.target=Number(target);g.current=Number(current);commit("Updated savings goal: "+g.name);toast("Goal updated.");
+ }
+}
+function renderActivity(){
+ $("acCount").textContent=state.activity.length;$("acExpenses").textContent=state.expenses.length;$("acGoals").textContent=state.goals.length;
+ $("activityList").innerHTML=state.activity.slice(0,100).map(a=>`<div class="list-row"><div class="list-icon">↗</div><div class="list-info"><strong>${escapeHTML(a.message)}</strong><small>${escapeHTML(new Date(a.date).toLocaleString("en-KE"))}</small></div></div>`).join("");
+ $("activityEmpty").classList.toggle("hidden",state.activity.length>0);
+}
+$("cashForm").addEventListener("submit",e=>{
+ e.preventDefault();const value=Number($("cashInput").value);
+ if(!Number.isFinite(value)||value<0){toast("Enter a valid amount of zero or more.");return}
+ state.cash=value;commit("Updated available cash to "+money(value));toast("Available cash saved.");
+});
+$("incomeForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const amount=$("incomeAmount").value.trim(),date=$("incomeDate").value,note=$("incomeNote").value.trim();
+ if(amount===""||!Number.isFinite(Number(amount))||Number(amount)<0){toast("Enter a valid expected income amount.");return}
+ if(date&&date<today()){if(!confirm("This date is in the past. Save it anyway?"))return}
+ state.income={amount:Number(amount),date,note};commit("Updated expected income plan");toast("Expected income saved separately.");
+});
+$("clearIncome").addEventListener("click",()=>{
+ if(!state.income)return;
+ state.income=null;commit("Cleared expected income plan");toast("Expected income cleared.");
+});
+$("expenseForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("expenseName").value.trim(),amount=Number($("expenseAmount").value);
+ if(!name||!Number.isFinite(amount)||amount<=0){toast("Enter an expense name and amount greater than zero.");return}
+ state.expenses.push({id:uid(),name,amount,date:$("expenseDate").value,category:$("expenseCategory").value,paid:false,created:new Date().toISOString()});
+ commit("Added expense: "+name+" ("+money(amount)+")");e.target.reset();toast("Expense added to your plan.");
+});
+$("goalForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("goalName").value.trim(),target=Number($("goalTarget").value),current=Number($("goalCurrent").value||0);
+ if(!name||!Number.isFinite(target)||target<=0||!Number.isFinite(current)||current<0){toast("Enter a goal name, a positive target and a valid saved amount.");return}
+ state.goals.push({id:uid(),name,target,current,created:new Date().toISOString()});
+ commit("Created savings goal: "+name);e.target.reset();$("goalCurrent").value="0";toast("Savings goal created.");
+});
+$("clearActivity").addEventListener("click",()=>{
+ if(!state.activity.length)return;
+ if(!confirm("Clear the activity history? Your expenses, cash, income and savings goals will remain."))return;
+ state.activity=[];save();render();toast("Activity history cleared.");
+});
+function download(name,content,type){
+ const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$("exportBtn").addEventListener("click",()=>{
+ const copy={app:"Nafasi",exportedAt:new Date().toISOString(),currency:"KES",...state};
+ download("nafasi-backup-"+today()+".json",JSON.stringify(copy,null,2),"application/json");
+ log("Exported Nafasi data");save();render();toast("Data export prepared.");
+});
+$("exportCsv").addEventListener("click",()=>{
+ const cell=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+ const rows=[["Name","Amount KSh","Due date","Category","Status","Created"],...state.expenses.map(e=>[e.name,e.amount,e.date,e.category,e.paid?"Paid":"Unpaid",e.created])];
+ download("nafasi-expenses-"+today()+".csv",rows.map(r=>r.map(cell).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+ log("Exported expense list as CSV");save();render();toast("Expense export prepared.");
+});
+$("resetBtn").addEventListener("click",()=>{
+ if(!confirm("This will permanently clear Nafasi data saved in this browser: cash, expected income, expenses, goals and activity. Export a backup first if you need one. Continue?"))return;
+ state=newState();save();render();toast("Nafasi data reset in this browser.");
+});
+document.querySelectorAll("[data-delay]").forEach(b=>b.addEventListener("click",()=>showDelay(Number(b.dataset.delay))));
+render();
+})();
+</script>
+</body>
+</html>
